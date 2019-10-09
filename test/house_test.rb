@@ -104,7 +104,7 @@ class HouseTest < Minitest::Test
     assert_equal [@room_1, @room_2, @room_3, @room_4], @house.rooms_sorted_by_area
   end
 
-  def it_can_group_rooms_by_category
+  def test_it_can_group_rooms_by_category
 
     @house.add_room(@room_1)
     @house.add_room(@room_2)
@@ -116,9 +116,16 @@ class HouseTest < Minitest::Test
     assert_equal true, @house.rooms_by_category.keys.include?(:bedroom && :basement && :living_room)
     assert_equal false, @house.rooms_by_category.keys.include?(:dining_room)
 
-    assert_equal true, @house.rooms_by_category[:bedroom].include?(@room_2)
-    assert_equal true, @house.rooms_by_category[:bedroom].include?(@room_1)
+    assert_equal 2, @house.rooms_by_category[:bedroom].length
+    assert_equal true, @house.rooms_by_category[:bedroom].include?(@room_2 && @room_1)
+
+    assert_equal 1, @house.rooms_by_category[:basement].length
+    assert_equal true, @house.rooms_by_category[:basement].include?(@room_4)
+
+    assert_equal 1, @house.rooms_by_category[:living_room].length
     assert_equal false, @house.rooms_by_category[:living_room].include?(@room_4)
+    assert_equal true, @house.rooms_by_category[:living_room].include?(@room_3)
+
   end
 
 end
