@@ -54,21 +54,21 @@ class HouseTest < Minitest::Test
 
   def test_it_can_get_rooms_from_category
 
-  @house.add_room(@room_1)
-  @house.add_room(@room_2)
-  @house.add_room(@room_3)
-  @house.add_room(@room_4)
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
 
-  assert_equal 2, @house.rooms_from_category(:bedroom).length
-  assert_equal true, @house.rooms_from_category(:bedroom).include?(@room_1)
-  assert_equal true, @house.rooms_from_category(:bedroom).include?(@room_2)
-  assert_equal false, @house.rooms_from_category(:bedroom).include?(@room_3)
+    assert_equal 2, @house.rooms_from_category(:bedroom).length
+    assert_equal true, @house.rooms_from_category(:bedroom).include?(@room_1)
+    assert_equal true, @house.rooms_from_category(:bedroom).include?(@room_2)
+    assert_equal false, @house.rooms_from_category(:bedroom).include?(@room_3)
 
-  assert_equal 1, @house.rooms_from_category(:basement).length
-  assert_equal true, @house.rooms_from_category(:basement).include?(@room_4)
+    assert_equal 1, @house.rooms_from_category(:basement).length
+    assert_equal true, @house.rooms_from_category(:basement).include?(@room_4)
 
-  assert_equal 1, @house.rooms_from_category(:living_room).length
-  assert_equal true, @house.rooms_from_category(:living_room).include?(@room_3)
+    assert_equal 1, @house.rooms_from_category(:living_room).length
+    assert_equal true, @house.rooms_from_category(:living_room).include?(@room_3)
   end
 
   def test_house_has_a_total_house_area
@@ -80,4 +80,45 @@ class HouseTest < Minitest::Test
 
     assert_equal 1900, @house.area
   end
+
+  def test_price_per_square_foot
+
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
+
+    assert_equal 210.53, @house.price_per_square_foot
+  end
+
+  def test_house_has_rooms_sorted_by_area
+
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
+
+    assert_equal @room_1, @house.rooms_sorted_by_area.first
+    assert_equal @room_4, @house.rooms_sorted_by_area.last
+
+    assert_equal [@room_1, @room_2, @room_3, @room_4], @house.rooms_sorted_by_area
+  end
+
+  def it_can_group_rooms_by_category
+
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
+
+    assert_instance_of Hash, @house.rooms_by_category
+
+    assert_equal true, @house.rooms_by_category.keys.include?(:bedroom && :basement && :living_room)
+    assert_equal false, @house.rooms_by_category.keys.include?(:dining_room)
+
+    assert_equal true, @house.rooms_by_category[:bedroom].include?(@room_2)
+    assert_equal true, @house.rooms_by_category[:bedroom].include?(@room_1)
+    assert_equal false, @house.rooms_by_category[:living_room].include?(@room_4)
+  end
+
 end
