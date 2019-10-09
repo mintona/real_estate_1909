@@ -14,12 +14,12 @@ class RoomTest < Minitest::Test
   end
 
   def test_initialize
-    assert_equal :bedroom, @room.type
+    assert_equal :bedroom, @room.category
     assert_equal 10, @room.width
     assert_equal 13, @room.length
   end
 
   def test_it_has_an_area
     assert_equal 130, @room.area
-  end 
+  end
 end

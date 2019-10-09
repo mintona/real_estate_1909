@@ -1,8 +1,8 @@
 class Room
-  attr_reader :type, :width, :length
+  attr_reader :category, :width, :length
 
-  def initialize(type, width, length)
-    @type = type
+  def initialize(category, width, length)
+    @category = category
     @width = width
     @length = length
   end
