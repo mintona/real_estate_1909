@@ -12,11 +12,11 @@ class House
   end
 
   def rooms_from_category(category)
-    rooms_by_category = @rooms.find_all { |room| room if room.category == category }
+    @rooms.find_all { |room| room if room.category == category }
   end
 
   def area
-    total_area = @rooms.reduce(0) do |total_area, room|
+    @rooms.reduce(0) do |total_area, room|
       total_area + room.area
     end
   end
@@ -26,11 +26,11 @@ class House
   end
 
   def rooms_sorted_by_area
-    rooms_by_area = @rooms.sort_by { |room| room.area }
+    @rooms.sort_by { |room| room.area }
   end
 
   def rooms_by_category
     @rooms.group_by { |room| room.category }
   end
-  
+
 end
